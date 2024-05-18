@@ -13,6 +13,19 @@ dotenv.config({
 
 
 connectDB()
+.then(() => {
+
+    app.on("error", (error) => {
+        console.log("Err in app", error);
+    })
+
+    app.listen(process.env.PORT || 8000, () => {
+        console.log(`server is running at ${process.env.PORT}`)
+    })
+})
+.catch((err) => {
+    console.log("MONGDO db connnection failed !!", err);
+})
 
 
 
