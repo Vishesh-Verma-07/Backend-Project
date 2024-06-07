@@ -16,16 +16,18 @@ const registerUser = asyncHandler(async (req, res) => {
     // check for user creation
     // return response
 
-
+    //get user details from frontend
     const {fullName, email, username, password} = req.body
     // console.log("email: ", email);
 
+    //validation for not empty
     if(
         [fullName, email, username, password].some((field) => field?.trim() === "")
     ){
         throw new ApiError(400, "All fields are required")
     }
 
+    // check if user already exists
     const existedUser = await User.findOne({
         $or: [{ username },{ email }]
     })
@@ -36,6 +38,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     // console.log(req.files)
 
+    // check for images, check for avatar
     const avatarLocalPath = req.files?.avatar[0]?.path;
     // const coverImageLocalPath = req.files?.coverImage[0]?.path;
 
