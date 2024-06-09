@@ -156,7 +156,7 @@ const loginUser = asyncHandler( async (req, res) => {
         new ApiResponse(
             200,
             {
-                user: loginUser, accessToken, refreshToken
+                user
             }, 
             "User logged in Successfully"
         )
@@ -169,8 +169,8 @@ const logoutUser = asyncHandler(async (req, res) => {
     await User.findByIdAndUpdate(
         req.user._id,
         {
-            $set: {
-                refreshToken: undefined
+            $unset: {
+                refreshToken: 1
             }
         }, 
         {
